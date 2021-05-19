@@ -1,6 +1,9 @@
 'use strict'
 const MINE = '💣'
 const MARKED = '🚩'
+const NORMAL = '😃'
+const WIN = '😎'
+const LOSE = '🤯'
 
 var gBorad;
 var isFirstClick = true;
@@ -17,6 +20,8 @@ var gGame = {
 
 
 function initGame() {
+    gGame.isOn = true;
+    document.querySelector('.smiley').innerText = NORMAL;
     gBorad = buildBoard();
     addMinesToBoard(gBorad);
     renderBoard(gBorad);
@@ -64,6 +69,7 @@ function addMinesToBoard(board) {
 }
 
 function cellClicked(elCell) {
+    if (!gGame.isOn) return;
     //First click is never a Mine
     // if (isFirstClick) {
     //     addMinesToBoard(gBorad);
@@ -81,22 +87,28 @@ function cellClicked(elCell) {
             gBorad[row][col].isShown = true;
         } else expandShown(gBorad, elCell, row, col);
     } else {
+        gGame.isOn = false;
+        document.querySelector('.smiley').innerText = LOSE;
         elCell.innerText = gBorad[row][col].minesAroundCount;
         elCell.style.backgroundColor = 'red'
         gBorad[row][col].isShown = true;
     }
 
     if (checkGameOver()) {
-        console.log('game over');
+        gGame.isOn = false;
+        document.querySelector('.smiley').innerText = WIN;
     }
 
 
 }
 
 function cellMarked(elCell) {
+    if (!gGame.isOn) return;
+    //disable context menu
     window.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     }, false);
+
     var cellId = elCell.id.split('-');
     var row = cellId[1];
     var col = cellId[2];
@@ -111,7 +123,8 @@ function cellMarked(elCell) {
 
     }
     if (checkGameOver()) {
-        console.log('game over');
+        gGame.isOn = false;
+        document.querySelector('.smiley').innerText = WIN;
     }
 }
 
@@ -142,4 +155,8 @@ function expandShown(board, elCell, row, col) {
             }
         }
     }
+}
+
+function restart() {
+    initGame();
 }
