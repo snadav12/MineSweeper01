@@ -6,7 +6,7 @@ const WIN = '😎'
 const LOSE = '🤯'
 
 var gBorad;
-var isFirstClick = true;
+var isFirstClick;
 var gLevel = {
     size: 4,
     mines: 2
@@ -21,6 +21,7 @@ var gGame = {
 
 function initGame() {
     gGame.isOn = true;
+    isFirstClick = true;
     document.querySelector('.smiley').innerText = NORMAL;
     gBorad = buildBoard();
     addMinesToBoard(gBorad);
@@ -51,7 +52,7 @@ function addMinesToBoard(board) {
         var col = getRandomInt(0, gLevel.size - 1);
         if (i === 1) {
 
-            while (board[row][col].isMine) {
+            while (board[row][col].isShown) {
                 var row = getRandomInt(0, gLevel.size - 1);
                 var col = getRandomInt(0, gLevel.size - 1);
             }
@@ -70,14 +71,18 @@ function addMinesToBoard(board) {
 
 function cellClicked(elCell) {
     if (!gGame.isOn) return;
-    //First click is never a Mine
-    // if (isFirstClick) {
-    //     addMinesToBoard(gBorad);
-    //     isFirstClick = false;
-    // }
     var cellId = elCell.id.split('-');
     var row = cellId[1];
     var col = cellId[2];
+    //First click is never a Mine
+    // if (isFirstClick) {
+    //     gBorad[row][col].isShown = true;
+    //     addMinesToBoard(gBorad);
+    //     isFirstClick = false;
+    //     elCell.style.backgroundColor = 'lightgray';
+    //     if (gBorad[row][col].minesAroundCoun) elCell.innerText = gBorad[row][col].minesAroundCount
+    //     return;
+    // }
     if (gBorad[row][col].isMarked) return;
     if (gBorad[row][col].isShown) return;
     if (!gBorad[row][col].isMine) {
@@ -141,8 +146,9 @@ function checkGameOver() {
 }
 
 function expandShown(board, elCell, row, col) {
-    row = parseInt(row);
-    col = parseInt(col);
+    var cellId = elCell.id.split('-');
+    row = parseInt(cellId[1]);
+    col = parseInt(cellId[2]);
     for (var i = row - 1; i <= row + 1; i++) {
         if (i < 0 || i > board.length - 1) continue;
         for (var j = col - 1; j <= col + 1; j++) {
@@ -152,6 +158,7 @@ function expandShown(board, elCell, row, col) {
                 elCurrCell.style.backgroundColor = 'lightgray'
                 board[i][j].isShown = true;
                 if (board[i][j].minesAroundCount) elCurrCell.innerText = board[i][j].minesAroundCount;
+
             }
         }
     }
