@@ -2,7 +2,7 @@
 
 
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function countMinesNegs(board, rowIdx, colIdx) {
@@ -34,4 +34,11 @@ function renderBoard(board) {
     }
     var elMat = document.querySelector('.game-board');
     elMat.innerHTML = strHtml;
+}
+
+function showTime() {
+    var currTime = new Date();
+    var elSec = document.querySelector('.time');
+    gGame.secsPassed = Math.floor((currTime.getTime() - gTimeStart.getTime()) % 60000 / 1000)
+    elSec.innerText = gGame.secsPassed;
 }

@@ -11,7 +11,11 @@
 
 <body onload="initGame()">
     <h1>Mine Sweeper</h1>
-    <div class="smiley" onclick="restart()"></div>
+    <button onclick="changeLevel(this)">Beginner</button>
+    <button onclick="changeLevel(this)">Medium</button>
+    <button onclick="changeLevel(this)">Expert</button>
+    <h2>Lives: <span class="lives"></span> | Timer: <span class="time"></span> </h2>
+    <div class="smiley" onclick="initGame()"></div>
     <table class="center">
         <tbody class="game-board"></tbody>
     </table>
