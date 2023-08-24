@@ -43,7 +43,7 @@ function buildBoard() {
     var board = [];
     for (var i = 0; i < size; i++) {
         board.push([]);
-        for (var j = 0; j < size; j++) {
+        for (var j = 0; j < size/2; j++) {
             board[i][j] = {
                 minesAroundCount: 0,
                 isShown: false,
