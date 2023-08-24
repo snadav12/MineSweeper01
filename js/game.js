@@ -43,7 +43,7 @@ function buildBoard() {
     var board = [];
     for (var i = 0; i < size; i++) {
         board.push([]);
-        for (var j = 0; j < size/2; j++) {
+        for (var j = 0; j < size; j++) {
             board[i][j] = {
                 minesAroundCount: 0,
                 isShown: false,
@@ -183,12 +183,12 @@ function changeLevel(elBtn) {
             gLevel.mines = 2;
             break;
         case 'Medium':
-            gLevel.size = 8;
-            gLevel.mines = 12;
+            gLevel.size = 10;
+            gLevel.mines = 20;
             break;
         case 'Expert':
-            gLevel.size = 30;
-            gLevel.mines = 60;
+            gLevel.size = 20;
+            gLevel.mines = 80;
             break;
     }
     initGame();
