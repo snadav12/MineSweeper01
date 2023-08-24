@@ -187,8 +187,8 @@ function changeLevel(elBtn) {
             gLevel.mines = 12;
             break;
         case 'Expert':
-            gLevel.size = 12;
-            gLevel.mines = 30;
+            gLevel.size = 30;
+            gLevel.mines = 60;
             break;
     }
     initGame();
